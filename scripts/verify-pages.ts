@@ -13,19 +13,22 @@ const PAGES: { path: string; expectedInBody: string[] }[] = [
   },
   {
     path: "/admin",
-    expectedInBody: ["管理ダッシュボード", "Phase 2"],
+    expectedInBody: ["ログイン"],
+    // 未認証時は /admin/login にリダイレクトされるためログイン画面の文言で検証
   },
   {
     path: "/admin/login",
-    expectedInBody: ["ログイン", "Phase 2"],
+    expectedInBody: ["ログイン", "管理画面"],
   },
   {
     path: "/admin/works/new",
-    expectedInBody: ["作品を追加", "Phase 4"],
+    expectedInBody: ["ログイン"],
+    // 未認証時は /admin/login にリダイレクト
   },
   {
     path: "/admin/works/test-id/edit",
-    expectedInBody: ["作品を編集", "Phase 4"],
+    expectedInBody: ["ログイン"],
+    // 未認証時は /admin/login にリダイレクト
   },
   {
     path: "/works/test-id",

@@ -57,7 +57,9 @@ description: Enforces iterative implementation with verification at each step. P
 各ステップで**必ず**検証を実行する。
 
 - ファイル追加・変更のたびに `build` / `lint` が通るか確認
+- **テスト追加・変更のたびに `npm run test` を実行して成功を確認**
 - ページ追加のたびにブラウザまたは `verify:pages` で描画確認
+- フォーム・認証等のUIは**ブラウザで実際に操作**して確認（Playwright / cursor-ide-browser 等）
 - Server Action / API 追加のたびに呼び出し・レスポンス確認
 
 ### 5. 最終検証
@@ -66,8 +68,9 @@ description: Enforces iterative implementation with verification at each step. P
 
 - [ ] `npm run build` 成功
 - [ ] `npm run lint` 成功（エラー0）
+- [ ] **`npm run test` が存在する場合、必ず実行して全テスト成功を確認**
 - [ ] 全ページの描画確認（ブラウザ or `verify:pages`）
-- [ ] ユニットテスト / E2E が存在する場合、全テスト成功
+- [ ] 追加した画面・フォームは**ブラウザで実際に操作して動作確認**（クリック、入力、送信など）
 - [ ] 仕様・チェックリストとの照合
 
 ## ワークフロー例
@@ -85,7 +88,9 @@ Task Progress:
 
 - [ ] ビルドは通るか
 - [ ] Lint エラーはないか
+- [ ] **テストを書いた場合、`npm run test` で成功するか確認したか**
 - [ ] 追加・変更した画面は正しく描画されるか（ブラウザツール推奨）
+- [ ] フォーム・バリデーション・認証等は**画面で操作して動作確認したか**（作りっぱなし禁止）
 - [ ] 複雑なロジックはテストを書いたか（TDD）
 
 ## 関連

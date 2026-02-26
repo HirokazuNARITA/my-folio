@@ -12,6 +12,13 @@
 
 # testing
 /coverage
+test-results/
+playwright-report/
+blob-report/
+.vitest/
+
+# MCP / IDE (プロジェクト非依存の生成物)
+.playwright-mcp/
 
 # next.js
 /.next/

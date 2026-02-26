@@ -1,5 +1,9 @@
-// Phase 2 でログイン画面を実装
+import { LoginForm } from "@/components/login-form";
 
 export default function LoginPage() {
-  return <div>ログイン（Phase 2）</div>;
+  return (
+    <div className="flex min-h-[80vh] items-center justify-center p-8">
+      <LoginForm />
+    </div>
+  );
 }

@@ -1,6 +1,6 @@
-# Phase 1 実装検証レポート
+# Phase 1 & 2 実装検証レポート
 
-最終検証日: 2026-02-25
+最終検証日: 2026-02-26
 
 ## Phase 1 完了チェックリスト
 
@@ -34,6 +34,10 @@
 | `components/empty-state.tsx` | ✅ |
 | `lib/prisma.ts` | ✅ |
 | `lib/supabase.ts` | ✅ |
+| `lib/supabase-server.ts` | ✅ Phase 2 |
+| `lib/supabase-middleware.ts` | ✅ Phase 2 |
+| `components/login-form.tsx` | ✅ Phase 2 |
+| `components/logout-button.tsx` | ✅ Phase 2 |
 | `lib/uploadthing.ts` | ✅ |
 | `lib/stripe.ts` | ✅ |
 | `actions/works.ts` | ✅ |
@@ -50,6 +54,17 @@
 | `npm run lint` | ✅ 成功 |
 | `npx tsc --noEmit` | ✅ 成功 |
 | `npm run verify:pages` | ✅ 全7ページ描画確認済み |
+| `npm run test` | ✅ ログインバリデーション 13テスト成功 |
+
+## Phase 2 完了チェックリスト
+
+| 項目 | 状態 | 備考 |
+|------|------|------|
+| Supabase オーナーアカウント作成 | ⏳ | ダッシュボードから手動作成 |
+| `/admin` 未認証でログインへリダイレクト | ✅ | ブラウザ確認済み |
+| `/admin/login` ログインフォーム表示 | ✅ | スクリーンショット確認済み |
+| ログイン成功→`/admin` リダイレクト | ⏳ | 正しい認証情報で手動確認 |
+| ログアウト→`/admin/login` リダイレクト | ⏳ | 手動確認 |
 
 ## 各ページ描画確認
 
@@ -58,10 +73,10 @@
 | パス | 期待表示 | 結果 |
 |------|----------|------|
 | `/` | Folio, Phase 1 完了, Getting Started | ✅ |
-| `/admin` | 管理ダッシュボード, Phase 2 | ✅ |
-| `/admin/login` | ログイン, Phase 2 | ✅ |
-| `/admin/works/new` | 作品を追加, Phase 4 | ✅ |
-| `/admin/works/[id]/edit` | 作品を編集, Phase 4 | ✅ |
+| `/admin` | ログイン（未認証時リダイレクト先） | ✅ |
+| `/admin/login` | ログイン, 管理画面 | ✅ |
+| `/admin/works/new` | ログイン（未認証時リダイレクト） | ✅ |
+| `/admin/works/[id]/edit` | ログイン（未認証時リダイレクト） | ✅ |
 | `/works/[id]` | 作品詳細, Phase 3 | ✅ |
 | `/works/[id]/success` | 購入ありがとうございました, Phase 6 | ✅ |
 

@@ -1,12 +1,25 @@
-// Phase 2 で /admin 以下を認証保護
-
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import { createClient } from "@/lib/supabase-middleware";
 
-export function middleware(request: NextRequest) {
-  void request; // Phase 2 で認証チェックに使用
-  // Phase 2 で Supabase Auth セッションをチェック
-  return NextResponse.next();
+export async function middleware(request: NextRequest) {
+  // /admin/login は認証不要（除外しないと無限リダイレクト）
+  if (request.nextUrl.pathname === "/admin/login") {
+    return NextResponse.next();
+  }
+
+  const { supabase, response } = createClient(request);
+
+  // セッション検証・トークン更新（getClaims が推奨）
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    return NextResponse.redirect(new URL("/admin/login", request.url));
+  }
+
+  return response;
 }
 
 export const config = {
