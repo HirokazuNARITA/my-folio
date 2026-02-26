@@ -1,36 +1,55 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Folio — クリエイター向け作品公開・販売サイト
 
-## Getting Started
+デザイナー・イラストレーターが自分の作品を公開・販売する個人サイトのサンプルアプリ。  
+Vibe Coding ベストプラクティス研修用。
 
-First, run the development server:
+## 技術スタック
+
+- Next.js 14+ (App Router, TypeScript)
+- Tailwind CSS + shadcn/ui
+- Supabase (Postgres + Auth)
+- Prisma (ORM)
+- Vercel (デプロイ)
+
+## ローカルでの起動方法
 
 ```bash
+# 依存関係のインストール
+npm install
+
+# 環境変数を設定（.env.example をコピーして .env.local を作成し、値を記入）
+cp .env.example .env.local
+
+# 開発サーバー起動
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+`http://localhost:3000` でアクセスできます。
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 必要な環境変数
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+`.env.local` に以下を設定してください。値は記載しません。
 
-## Learn More
+| 変数名 | 用途 |
+|--------|------|
+| `NEXT_PUBLIC_SUPABASE_URL` | Supabase プロジェクト URL |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase 公開キー（anon） |
+| `SUPABASE_SERVICE_ROLE_KEY` | Supabase 秘密キー（サーバーサイドのみ） |
+| `DATABASE_URL` | Prisma 用 Postgres 接続文字列 |
 
-To learn more about Next.js, take a look at the following resources:
+> ⚠️ `SUPABASE_SERVICE_ROLE_KEY` と `DATABASE_URL` は絶対に GitHub に公開しないこと。
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Phase 実装状況
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- [x] **Phase 1: デプロイ基盤** — Next.js・shadcn/ui・Prisma・Supabase 接続設定・フォルダ構造
+- [ ] Phase 2: 認証
+- [ ] Phase 3: UI構築
+- [ ] Phase 4: フォーム・DB
+- [ ] Phase 5: ファイルアップロード
+- [ ] Phase 6: 決済
+- [ ] Phase 7: 監視・分析
+- [ ] Phase 8: 環境変数管理
 
-## Deploy on Vercel
+## 参考
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- [vibe-coding-best-practice-guide](https://github.com/HirokazuNARITA/vibe-coding-best-practice-guide)
