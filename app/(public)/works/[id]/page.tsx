@@ -5,6 +5,8 @@ import { Badge } from "@/components/ui/badge";
 import { getWorkById } from "@/actions/works";
 import { getCategoryLabel } from "@/lib/category-labels";
 
+export const dynamic = "force-dynamic";
+
 interface WorkDetailPageProps {
   params: Promise<{ id: string }>;
 }

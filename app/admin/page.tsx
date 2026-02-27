@@ -12,6 +12,8 @@ import { TogglePublishButton } from "@/components/toggle-publish-button";
 import { getAllWorks } from "@/actions/works";
 import { getCategoryLabel } from "@/lib/category-labels";
 
+export const dynamic = "force-dynamic";
+
 export default async function AdminPage() {
   const supabase = await createClient();
   const {

@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button";
 import { WorkForm } from "@/components/work-form";
 import { getWorkById } from "@/actions/works";
 
+export const dynamic = "force-dynamic";
+
 interface EditWorkPageProps {
   params: Promise<{ id: string }>;
 }

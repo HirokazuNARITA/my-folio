@@ -2,6 +2,8 @@ import { WorkCard } from "@/components/work-card";
 import { EmptyState } from "@/components/empty-state";
 import { getWorks } from "@/actions/works";
 
+export const dynamic = "force-dynamic";
+
 export default async function Home() {
   const works = await getWorks();
 
