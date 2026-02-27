@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { DUMMY_WORKS } from "@/lib/dummy-works";
+import { getWorkById } from "@/actions/works";
 import { getCategoryLabel } from "@/lib/category-labels";
 
 interface WorkDetailPageProps {
@@ -11,9 +11,9 @@ interface WorkDetailPageProps {
 
 export default async function WorkDetailPage({ params }: WorkDetailPageProps) {
   const { id } = await params;
-  const work = DUMMY_WORKS.find((w) => w.id === id);
+  const work = await getWorkById(id);
 
-  if (!work) {
+  if (!work || !work.published) {
     return (
       <div className="container mx-auto px-4 py-8">
         <p className="text-muted-foreground">作品が見つかりません。</p>

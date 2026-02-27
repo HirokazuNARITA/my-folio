@@ -1,5 +1,9 @@
-// Phase 4 で作品投稿フォームを実装
+import { WorkForm } from "@/components/work-form";
 
 export default function NewWorkPage() {
-  return <div>作品を追加（Phase 4）</div>;
+  return (
+    <div className="container mx-auto max-w-4xl px-4 py-8">
+      <WorkForm />
+    </div>
+  );
 }

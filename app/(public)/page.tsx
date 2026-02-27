@@ -1,9 +1,9 @@
 import { WorkCard } from "@/components/work-card";
 import { EmptyState } from "@/components/empty-state";
-import { DUMMY_WORKS } from "@/lib/dummy-works";
+import { getWorks } from "@/actions/works";
 
-export default function Home() {
-  const works = DUMMY_WORKS;
+export default async function Home() {
+  const works = await getWorks();
 
   return (
     <div className="min-h-screen">

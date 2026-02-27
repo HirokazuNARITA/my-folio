@@ -1,13 +1,15 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Pencil, Trash2 } from "lucide-react";
+import { Pencil } from "lucide-react";
 import { createClient } from "@/lib/supabase-server";
 import { LogoutButton } from "@/components/logout-button";
 import { EmptyState } from "@/components/empty-state";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import { DUMMY_WORKS } from "@/lib/dummy-works";
+import { DeleteWorkButton } from "@/components/delete-work-button";
+import { TogglePublishButton } from "@/components/toggle-publish-button";
+import { getAllWorks } from "@/actions/works";
 import { getCategoryLabel } from "@/lib/category-labels";
 
 export default async function AdminPage() {
@@ -16,7 +18,7 @@ export default async function AdminPage() {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const works = DUMMY_WORKS;
+  const works = await getAllWorks();
 
   return (
     <div className="p-8">
@@ -66,17 +68,21 @@ export default async function AdminPage() {
                       : `¥${work.price.toLocaleString()}`}
                   </span>
                 </div>
-                <div className="flex shrink-0 gap-2">
+                <div className="flex shrink-0 items-center gap-2">
+                  <TogglePublishButton
+                    workId={work.id}
+                    published={work.published}
+                  />
                   <Button variant="outline" size="icon" asChild>
                     <Link href={`/admin/works/${work.id}/edit`}>
                       <Pencil className="size-4" />
                       <span className="sr-only">編集</span>
                     </Link>
                   </Button>
-                  <Button variant="outline" size="icon" disabled>
-                    <Trash2 className="size-4" />
-                    <span className="sr-only">削除</span>
-                  </Button>
+                  <DeleteWorkButton
+                    workId={work.id}
+                    workTitle={work.title}
+                  />
                 </div>
               </CardContent>
             </Card>
