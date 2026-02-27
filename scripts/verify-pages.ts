@@ -9,12 +9,11 @@ const BASE = process.env.BASE_URL ?? "http://localhost:3000";
 const PAGES: { path: string; expectedInBody: string[] }[] = [
   {
     path: "/",
-    expectedInBody: ["Folio", "Phase 1 完了", "Getting Started"],
+    expectedInBody: ["Folio", "作品一覧"],
   },
   {
     path: "/admin",
     expectedInBody: ["ログイン"],
-    // 未認証時は /admin/login にリダイレクトされるためログイン画面の文言で検証
   },
   {
     path: "/admin/login",
@@ -23,16 +22,14 @@ const PAGES: { path: string; expectedInBody: string[] }[] = [
   {
     path: "/admin/works/new",
     expectedInBody: ["ログイン"],
-    // 未認証時は /admin/login にリダイレクト
   },
   {
     path: "/admin/works/test-id/edit",
     expectedInBody: ["ログイン"],
-    // 未認証時は /admin/login にリダイレクト
   },
   {
-    path: "/works/test-id",
-    expectedInBody: ["作品詳細", "Phase 3"],
+    path: "/works/1",
+    expectedInBody: ["一覧に戻る", "イラスト集：春の風景"],
   },
   {
     path: "/works/test-id/success",
