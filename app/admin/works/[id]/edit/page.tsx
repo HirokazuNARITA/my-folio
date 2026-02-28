@@ -29,6 +29,7 @@ export default async function EditWorkPage({ params }: EditWorkPageProps) {
           title: work.title,
           description: work.description,
           category: work.category,
+          imageUrl: work.imageUrl,
           price: work.price,
           published: work.published,
         }}

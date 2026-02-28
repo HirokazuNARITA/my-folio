@@ -45,7 +45,7 @@ npm run dev
 - [ ] Phase 2: 認証
 - [ ] Phase 3: UI構築
 - [ ] Phase 4: フォーム・DB
-- [ ] Phase 5: ファイルアップロード
+- [x] **Phase 5: ファイルアップロード** — UploadThing による画像アップロード
 - [ ] Phase 6: 決済
 - [ ] Phase 7: 監視・分析
 - [ ] Phase 8: 環境変数管理

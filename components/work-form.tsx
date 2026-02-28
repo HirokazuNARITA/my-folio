@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -37,6 +38,7 @@ import {
 import { createWork, updateWork } from "@/actions/works";
 import { CATEGORY_LABELS } from "@/lib/category-labels";
 import type { Category } from "@/types";
+import { UploadButton } from "@/lib/uploadthing";
 
 const CATEGORIES: Category[] = ["ILLUSTRATION", "GRAPHIC", "UI", "OTHER"];
 
@@ -55,6 +57,7 @@ export function WorkForm({ defaultValues }: WorkFormProps) {
       title: "",
       description: "",
       category: "ILLUSTRATION",
+      imageUrl: "",
       price: 0,
       published: false,
     },
@@ -111,6 +114,47 @@ export function WorkForm({ defaultValues }: WorkFormProps) {
                   <FormLabel>タイトル</FormLabel>
                   <FormControl>
                     <Input placeholder="作品のタイトル" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="imageUrl"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>画像</FormLabel>
+                  <FormControl>
+                    <div className="space-y-4">
+                      {field.value ? (
+                        <div className="relative aspect-video w-full max-w-md overflow-hidden rounded-lg border">
+                          <Image
+                            src={field.value}
+                            alt="プレビュー"
+                            fill
+                            className="object-cover"
+                            sizes="(max-width: 768px) 100vw, 512px"
+                          />
+                        </div>
+                      ) : null}
+                      <UploadButton
+                        endpoint="imageUploader"
+                        onClientUploadComplete={(res) => {
+                          const url = res?.[0]?.url;
+                          if (url) field.onChange(url);
+                        }}
+                        onUploadError={(error) => {
+                          form.setError("imageUrl", {
+                            message: error.message,
+                          });
+                        }}
+                        content={{
+                          button: "画像を選択",
+                          allowedContent: "画像（最大4MB）",
+                        }}
+                      />
+                    </div>
                   </FormControl>
                   <FormMessage />
                 </FormItem>

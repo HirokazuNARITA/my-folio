@@ -42,7 +42,7 @@ export async function createWork(data: WorkFormValues) {
       title: parsed.data.title,
       description: parsed.data.description,
       category: parsed.data.category as Category,
-      imageUrl: "https://placehold.co/800x450?text=No+Image", // Phase 5 で画像アップロード
+      imageUrl: parsed.data.imageUrl,
       price: parsed.data.price,
       published: parsed.data.published,
     },
@@ -66,7 +66,7 @@ export async function updateWork(id: string, data: WorkFormValues) {
       title: parsed.data.title,
       description: parsed.data.description,
       category: parsed.data.category as Category,
-      // imageUrl は Phase 5 で更新、ここでは既存値を維持
+      imageUrl: parsed.data.imageUrl,
       price: parsed.data.price,
       published: parsed.data.published,
     },
