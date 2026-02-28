@@ -1,9 +1,28 @@
 ---
 name: implement-verify-iterate
-description: Enforces iterative implementation with verification at each step. Prevents "implement everything then verify at the end". Uses TDD (Red-Green-Refactor) when implementation is complex. Use when implementing features, building apps, or when the user asks for implementation with proper verification, TDD, or iterative development.
+description: Enforces iterative implementation with verification at each step. Prevents "implement everything then verify at the end". Uses TDD (Red-Green-Refactor) when implementation is complex. Use when implementing features, building apps, following phase guides or curriculum, or when the user asks for implementation with proper verification, TDD, or iterative development.
 ---
 
 # 実装→確認の反復プロセス
+
+## ガイド・手順書に [USER] / [AGENT] ラベルがある場合
+
+手順書の各Stepに `[USER]` または `[AGENT]` ラベルが付いている場合、**必ず**以下を守る。
+
+| ラベル | 実施者 | エージェントの行動 |
+|--------|--------|-------------------|
+| `[USER]` | ユーザー | 「ユーザーへの提示内容」をそのまま提示し、**完了確認を待ってから**次のStepに進む。絶対にスキップしない。 |
+| `[AGENT]` | エージェント | コード実装・コマンド実行などを自律的に実行する。 |
+
+- ❌ `[USER]` のStepを無視して `[AGENT]` のStepに進む
+- ✅ `[USER]` のStep → 提示 → 完了確認 → 次へ
+
+### 複数ステップのタスク（カリキュラム・フェーズ実装等）
+
+複数ステップに分かれるタスクでは、**各ステップ完了後にユーザー確認を依頼**し、承認を得てから次へ進む。
+
+- ✅ Step 1 実装 → 検証 → **ユーザーに確認依頼** → 承認 → Step 2 へ
+- ❌ ユーザー確認を待たずに次のステップへ進む
 
 ## 禁止パターン（Anti-Pattern）
 
@@ -50,7 +69,17 @@ description: Enforces iterative implementation with verification at each step. P
 3. **REFACTOR**: 重複を消し、設計を整える
 4. 次のテストへ（1に戻る）
 
-複雑なロジック・ビジネスルール・API はテストを先に書く。
+**TDD の対象はバリデーションスキーマに限定されない。** 以下に該当するコードはテストを書く：
+
+| 対象 | 例 | テスト方法 |
+|------|-----|------------|
+| バリデーションスキーマ | Zod スキーマ | 直接 safeParse で検証 |
+| Server Actions | createWork, updateWork | Prisma をモックしてテスト |
+| API ハンドラ | Route Handler | リクエスト/レスポンスをモック |
+| ビジネスロジック | 条件分岐、計算 | ユニットテスト |
+| 外部サービス連携 | DB 操作、外部 API | モック or 統合テスト |
+
+**複雑さの判断基準**（reference.md 参照）: 条件分岐が複数ある、DB 操作がある、ビジネスルールが入り組んでいる、リグレッションを恐れる変更。
 
 ### 4. 検証の実行タイミング
 
@@ -60,6 +89,7 @@ description: Enforces iterative implementation with verification at each step. P
 - **テスト追加・変更のたびに `npm run test` を実行して成功を確認**
 - ページ追加のたびにブラウザまたは `verify:pages` で描画確認
 - フォーム・認証等のUIは**ブラウザで実際に操作**して確認（Playwright / cursor-ide-browser 等）
+- **画像アップロード等**はファイル選択→アップロード→プレビュー表示→送信まで**一連の流れを実際に実行**して確認する（ボタン表示のみで終わらない）
 - Server Action / API 追加のたびに呼び出し・レスポンス確認
 
 ### 5. 最終検証
@@ -72,6 +102,15 @@ description: Enforces iterative implementation with verification at each step. P
 - [ ] 全ページの描画確認（ブラウザ or `verify:pages`）
 - [ ] 追加した画面・フォームは**ブラウザで実際に操作して動作確認**（クリック、入力、送信など）
 - [ ] 仕様・チェックリストとの照合
+- [ ] **リグレッション確認**: `npm run test` で全テスト成功。追加・変更したコードにユニットテストを追加する
+
+## リグレッション防止
+
+- **バリデーションスキーマ**（Zod 等）を追加・変更した場合 → ユニットテストを追加
+- **Server Actions** を追加・変更した場合 → Prisma 等をモックしてテストを追加
+- **API ハンドラ** を追加・変更した場合 → リクエスト/レスポンスのテストを追加
+- **ビジネスロジック** を追加・変更した場合 → ユニットテストを追加
+- 最終検証時に `npm run test` を実行し、全テスト成功を確認する
 
 ## ワークフロー例
 
@@ -86,11 +125,15 @@ Task Progress:
 
 ## チェックリスト（毎回の実装後）
 
+- [ ] **手順書に `[USER]` のStepがある場合、提示→完了確認を待ったか**（スキップ禁止）
+- [ ] **複数ステップのタスクで、各ステップ完了後にユーザー確認を依頼したか**
 - [ ] ビルドは通るか
 - [ ] Lint エラーはないか
-- [ ] **テストを書いた場合、`npm run test` で成功するか確認したか**
+- [ ] **`npm run test` で全テスト成功を確認したか**
 - [ ] 追加・変更した画面は正しく描画されるか（ブラウザツール推奨）
 - [ ] フォーム・バリデーション・認証等は**画面で操作して動作確認したか**（作りっぱなし禁止）
+- [ ] **画像アップロード等は、実際にファイルを選択・アップロード・送信まで確認したか**
+- [ ] 追加・変更した**コード（スキーマ、Server Actions、API、ビジネスロジック）に**リグレッション防止のテストを追加したか
 - [ ] 複雑なロジックはテストを書いたか（TDD）
 
 ## 関連
