@@ -28,7 +28,10 @@
 
 ### 常に守ること
 
-- **Skill の活用**: implement-verify-iterate, skill-task-process 等を積極的に使う
+- **Skill の確認・活用**:
+  - 実行開始時および各ステップ前に、該当 Skill（`implement-verify-iterate` 等）を読み、ルールに沿っているか確認する
+  - `implement-verify-iterate`: [USER] は提示→完了確認を待つ。各ステップ完了後にユーザー確認を依頼し、承認を得てから次へ。実装→検証→確認の反復を守る
+  - `skill-task-process`: 標準・重要タスクでは計画提示→承認後に実行
 - **ログイン**: narita@sansou.co.jp / Sansou123
 - **役割分担**:
   - AI: アプリのブラウザ確認（ログイン、CRUD、フォーム操作など）を **Playwright**（user-playwright MCP）で実施

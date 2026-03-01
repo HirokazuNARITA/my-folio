@@ -1,1 +1,15 @@
-// Phase 6 で Stripe クライアントを実装
+import Stripe from "stripe";
+
+let stripeClient: Stripe | null = null;
+
+/** Stripe クライアント（シングルトン） */
+export function getStripe(): Stripe {
+  if (!stripeClient) {
+    const secretKey = process.env.STRIPE_SECRET_KEY;
+    if (!secretKey) {
+      throw new Error("STRIPE_SECRET_KEY is not set");
+    }
+    stripeClient = new Stripe(secretKey);
+  }
+  return stripeClient;
+}

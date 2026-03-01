@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { WorkPurchaseButton } from "@/components/work-purchase-button";
 import { getWorkById } from "@/actions/works";
 import { getCategoryLabel } from "@/lib/category-labels";
 
@@ -63,7 +64,7 @@ export default async function WorkDetailPage({ params }: WorkDetailPageProps) {
             </div>
             <div className="flex items-center gap-4">
               <span className="text-lg font-semibold">{priceLabel}</span>
-              <Button disabled>購入する（Phase 6で有効化）</Button>
+              <WorkPurchaseButton workId={work.id} price={work.price} />
             </div>
           </div>
         </div>
