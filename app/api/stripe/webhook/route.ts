@@ -32,7 +32,7 @@ export async function POST(request: Request) {
   }
 
   if (event.type === "checkout.session.completed") {
-    console.log("checkout.session.completed", event.data.object);
+    // TODO: 決済完了時の処理（注文確定など）を実装
   }
 
   return NextResponse.json({ received: true });
