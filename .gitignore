@@ -54,3 +54,6 @@ memo.txt
 
 # Sentry Config File
 .env.sentry-build-plugin
+
+# Lighthouse
+lighthouse-report.json

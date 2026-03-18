@@ -9,6 +9,7 @@
     "start": "next start",
     "lint": "eslint",
     "verify:pages": "npx tsx scripts/verify-pages.ts",
+    "lighthouse": "lighthouse http://localhost:3000 --output=json --output-path=./lighthouse-report.json --chrome-flags=\"--headless\" --only-categories=performance,accessibility,best-practices,seo --form-factor=mobile --quiet",
     "test": "vitest run"
   },
   "dependencies": {
@@ -45,6 +46,8 @@
     "eslint": "^9",
     "eslint-config-next": "16.1.6",
     "jsdom": "^28.1.0",
+    "lighthouse": "^13.0.3",
+    "playwright": "^1.58.2",
     "prisma": "^7.4.1",
     "shadcn": "^3.8.5",
     "tailwindcss": "^4",
