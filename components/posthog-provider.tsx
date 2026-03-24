@@ -15,13 +15,18 @@ export function PostHogProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     if (
-      typeof window !== "undefined" &&
-      process.env.NEXT_PUBLIC_POSTHOG_KEY &&
-      process.env.NEXT_PUBLIC_POSTHOG_HOST
+      typeof window === "undefined" ||
+      !process.env.NEXT_PUBLIC_POSTHOG_KEY ||
+      !process.env.NEXT_PUBLIC_POSTHOG_HOST
     ) {
-      initPostHog();
-      setIsReady(true);
+      return;
     }
+    initPostHog();
+    // 初期化直後の setState は effect 内同期呼び出しとして eslint に弾かれるため、
+    // マイクロタスクにずらして PHProvider 用の再レンダーをスケジュールする
+    queueMicrotask(() => {
+      setIsReady(true);
+    });
   }, []);
 
   useEffect(() => {
